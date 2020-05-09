@@ -5293,12 +5293,12 @@ button.bg-light:focus {
   background-color: #dae0e5 !important; }
 
 .bg-dark {
-  background-color: #343a40 !important; }
+  background-color: #021f05 !important; }
 
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
 button.bg-dark:focus {
-  background-color: #1d2124 !important; }
+  background-color: #000000 !important; }
 
 .bg-white {
   background-color: #fff !important; }
@@ -8049,12 +8049,12 @@ h1, h2, h3, h4, h5,
     color: white; }
 
 .ftco-navbar-light {
-  background: transparent !important;
+  /* background: transparent !important; */
   z-index: 3;
   padding: 0; }
   @media (max-width: 991.98px) {
     .ftco-navbar-light {
-      background: black !important;
+      background: #021f05 !important;
       position: relative;
       top: 0;
       padding: 10px 15px; } }
@@ -8067,7 +8067,7 @@ h1, h2, h3, h4, h5,
       color: #118135; }
     @media (max-width: 991.98px) {
       .ftco-navbar-light .navbar-brand {
-        color: #fff; } }
+        color: #82ae46; } }
   @media (max-width: 991.98px) {
     .ftco-navbar-light .navbar-nav {
       padding-bottom: 10px; } }
@@ -8078,7 +8078,7 @@ h1, h2, h3, h4, h5,
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 400;
-    color: #000000;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 1px;
     opacity: 1 !important; }
@@ -8140,7 +8140,7 @@ h1, h2, h3, h4, h5,
         color: #fff;
         background: #82ae46; } }
   .ftco-navbar-light .navbar-nav > .nav-item.active > a {
-    color: #000000; }
+    color: #ffffff; }
     @media (max-width: 991.98px) {
       .ftco-navbar-light .navbar-nav > .nav-item.active > a {
         color: #fff;
