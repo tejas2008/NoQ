@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session,flash
 import datetime
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
@@ -11,7 +11,7 @@ app.secret_key = 'secret'
 # Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'hackathon'
 
 # Intialize MySQL
@@ -175,9 +175,29 @@ def register1():
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def display():
-    date1 = datetime.date.today() + datetime.timedelta(days=1)
+    msg=''
+    now = datetime.datetime.now()
+    eve = now.replace(hour=19, minute=0, second=0, microsecond=0)
+    if now <= eve:
+        date = datetime.date.today() + datetime.timedelta(days=1)
+    else:
+        date = datetime.date.today() + datetime.timedelta(days=2)
+    if request.method == 'POST':
+        start = request.form['start'][:2]
+        end = request.form['end'][:2]
+        shopid = 1
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM slotbook WHERE date = %s', [date])
+        boolean = cursor.fetchone()
+        if boolean:
+            msg = 'Slot has been already placed for'
+            return render_template('shopdash.html',date=date,session=session,msg=msg)
+        else:
+            cursor.execute('INSERT INTO slotbook VALUES (%s, %s, %s,%s)', (1,date, start, end,))
+            mysql.connection.commit()
+            msg = 'Slot has been Successfully placed for'
 
-    return render_template('shopdash.html',date1=date1,session=session)
+    return render_template('shopdash.html',date=date,session=session,msg=msg)
 
 
 

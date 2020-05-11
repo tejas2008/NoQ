@@ -67,16 +67,22 @@
          <div class="row justify-content-center mb-5 pb-3" >
             <div class="col-md-7 heading-section ftco-animate text-center fadeInUp ftco-animated" style="color:black;font-family: Poppins;">
                 <!-- <span class="subheading">Your Shop Details</span> -->
+              <div class="alert alert-warning" role="alert">
+                  {{msg}} {{date}}
+              </div>
               <h2 class="mb-4" style="font-size: 25px;"><br>Your Shop Details</h2>
               <p>Shop Name : {{session['shop_name']}}</p>
               <p>Owner Name : {{session['owner_name']}}</p>
               <p>Shop Address : {{session['address']}}</p>
               <p>Region : {{session['region']}}</p>
               <p>Contact Number : {{session['mobile']}}</p>
-              <h2 class="mb-4" style="font-size: 25px;"><br>Set slot for {{date1}}</h2>
-              <p>Start time (24 hour format) :  <input type="time" id="appt" name="appt"></p>
-              <p>End time (24 hour format) :  <input type="time" id="appt" name="appt"></p>
-              <a href="#" class="btn btn-primary">SET SLOT</a>
+              <h2 class="mb-4" style="font-size: 25px;"><br>Set slot for {{date}}</h2>
+              <form method="POST">
+                <p>Start time (24 hour format) :  <input type="time" id="start" name="start"></p>
+              <p>End time (24 hour format) :  <input type="time" id="end" name="end"></p>
+              <input type="submit" value="Set" class="btn btn-success">
+              </form>
+            
             </div>
           </div>      
     </section>    
