@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import datetime
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
@@ -10,7 +11,7 @@ app.secret_key = 'secret'
 # Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'hackathon'
 
 # Intialize MySQL
@@ -73,7 +74,7 @@ def login1():
             session['shop_name'] = shop['shop_name']
             session['owner_name'] = shop['owner_name']
             # Redirect to home page
-            return redirect(url_for('home'))
+            return redirect(url_for('display'))
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -171,6 +172,13 @@ def register1():
         msg = 'Please fill out the form!'
     # Show registration form with message (if any)
     return render_template('shopregister.html',msg=msg)
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+def display():
+    date1 = datetime.date.today() + datetime.timedelta(days=1)
+
+    return render_template('shopdash.html',date1=date1,session=session)
+
 
 
 if __name__ == '__main__':
