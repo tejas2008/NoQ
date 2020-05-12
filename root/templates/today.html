@@ -49,9 +49,9 @@
                 <a class="dropdown-item" href="checkout.html">Checkout</a>
               </div>
             </li> -->
-	          <li class="nav-item"><a href="#" class="nav-link">Today</a></li>
+	          <li class="nav-item"><a href="/customer/today" class="nav-link">Today</a></li>
 	          <!-- <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li> -->
-	          <li class="nav-item"><a href="tomorrow.html" class="nav-link">Tomorrow</a></li>
+	          <li class="nav-item"><a href="/customer/tomorrow" class="nav-link">Tomorrow</a></li>
 	          <!-- <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li> -->
 
 			</ul>
@@ -88,42 +88,25 @@
 </section>
     <section class="ftco-section">
     	<div class="container">
-    		<!--<div class="row justify-content-center">
-    			<div class="col-md-10 mb-5 text-center">
-					<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown04">
-						<a class="dropdown-item" href="#">Location</a>
-						<a class="dropdown-item" href="#">Wishlist</a>
-					  <a class="dropdown-item" href="#">Single Product</a>
-					  <a class="dropdown-item" href="cart.html">Cart</a>
-					  <a class="dropdown-item" href="checkout.html">Checkout</a>
-					</div>
-    				<ul class="product-category">
-    					<li><a href="#" class="active">All</a></li>
-    					<li><a href="#">Vegetables</a></li>
-    					<li><a href="#">Fruits</a></li>
-    					<li><a href="#">Juice</a></li>
-    					<li><a href="#">Dried</a></li>
-    				</ul> 
-    			</div>
-    		</div>-->
-    		<div class="card-deck">
-    			<div class="card" >
+    		<!-- <div class="card-deck"> -->
+				{% for i in range(l) %}
+			
+				<div class="col-md-6 col-md-offset-3">
     				<div class="product">
-    					<a href="#" class="img-prod"><img class="img-fluid" src="../static/images/shop-5.jpg"  alt="First Shop">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="../static/images/test.png"  alt="First Shop">
     						<!--<span class="status">30%</span>-->
     						<div class="overlay"></div>
     					</a>
     					<div class="text py-3 pb-4 px-3 text-center card-body">
-    						<h3><a href="#">Royal SuperMarket</a></h3>
+    						<h3><a href="#">{{shops[i]['shop_name']}}</a></h3>
     						<div class="d-flex">
     							<div class="pricing">
-		    						<p class="price card-text"><span>Address: Shop No.4, Siddhachal Complex<br>Owner: Sarvesh Bangad<br>Phone: 9876543210</span></p>
+		    						<p class="price card-text"><span>Address: {{shops[i]['address']}}<br>Owner: {{shops[i]['owner_name']}}<br>Phone: {{shops[i]['mobile']}}</span></p>
 		    					</div>
 	    					</div>
 	    					<div class="bottom-area d-flex px-3">
 	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px;">
+	    							<a href="/today/slots/{{shops[i]['id_shop']}}" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px;">
 	    								<span>Book Slots</span>
 	    							</a>
 	    						<!--	<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
@@ -137,10 +120,14 @@
     					</div>
     				</div>
 				</div>
-				<div class="card " >
+			
+				<div></div>
+				{% endfor %}
+    			
+				
+				<!-- <div class="card ">
     				<div class="product">
     					<a href="#" class="img-prod"><img class="img-fluid" src="../static/images/shop-5.jpg"  alt="Second Shop">
-    						<!--<span class="status">30%</span>-->
     						<div class="overlay"></div>
     					</a>
     					<div class="text py-3 pb-4 px-3 text-center card-body">
@@ -155,12 +142,7 @@
 	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px; ">
 	    								<span>Book Slots</span>
 	    							</a>
-	    						<!--	<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>-->
+	    						
     							</div>
     						</div>
     					</div>
@@ -181,19 +163,15 @@
     						<div class="bottom-area d-flex px-3">
 	    						<div class="m-auto d-flex">
 	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px; ">
-	    								<span><!--<i class="ion-ios-menu"></i>-->Book Slots</span>
+	    								<span>Book Slots</span>
 	    							</a>
-	    							<!--<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-	    								<span><i class="ion-ios-cart"></i></span>
-	    							</a>
-	    							<a href="#" class="heart d-flex justify-content-center align-items-center ">
-	    								<span><i class="ion-ios-heart"></i></span>
-	    							</a>-->
+	    							
     							</div>
     						</div>
     					</div>
-    				</div>
-				</div>
+    				</div>-->
+				<!-- </div> -->
+				</div> 
 			</section>
 			<section class="ftco-section img"  style="background-color: #82ae46;padding:0px">
 				<div class="mouse">

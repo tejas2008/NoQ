@@ -41,7 +41,7 @@ def login():
             session['mobile'] = customer['mobileno']
             session['region'] = customer['region']
             # Redirect to home page
-            return redirect(url_for('home'))
+            return redirect(url_for('today'))
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -185,20 +185,66 @@ def display():
     if request.method == 'POST':
         start = request.form['start'][:2]
         end = request.form['end'][:2]
-        shopid = 1
+        shopid = session['id']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM slotbook WHERE date = %s', [date])
+        cursor.execute('SELECT * FROM slotbook WHERE date = %s and id_shop=%s', [date,shopid])
         boolean = cursor.fetchone()
         if boolean:
             msg = 'Slot has been already placed for'
             return render_template('shopdash.html',date=date,session=session,msg=msg)
         else:
-            cursor.execute('INSERT INTO slotbook VALUES (%s, %s, %s,%s)', (1,date, start, end,))
+            cursor.execute('INSERT INTO slotbook VALUES (%s, %s, %s,%s)', (shopid,date, start, end,))
             mysql.connection.commit()
             msg = 'Slot has been Successfully placed for'
 
     return render_template('shopdash.html',date=date,session=session,msg=msg)
 
+@app.route('/customer/today')
+def today():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    today_date = datetime.date.today()
+    cursor.execute('select distinct shop.shop_name,shop.owner_name,shop.address,shop.mobile,slotbook.id_shop from shop inner join slotbook on shop.shopid=slotbook.id_shop where slotbook.date=%s',[today_date,])
+    shops_today = cursor.fetchall()
+    print(shops_today,len(shops_today))
+    length  =len(shops_today)
+    if shops_today:
+        return render_template('today.html',shops=shops_today,l=length)
+    else:
+        return "No shops"
+
+@app.route('/customer/tomorrow')
+def tomorrow():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    tomorrow_date = date = datetime.date.today() + datetime.timedelta(days=1)
+    cursor.execute('select distinct shop.shop_name,shop.owner_name,shop.address,shop.mobile,slotbook.id_shop from shop inner join slotbook on shop.shopid=slotbook.id_shop where slotbook.date=%s',[tomorrow_date,])
+    shops_tomorrow = cursor.fetchall()
+    print(shops_tomorrow,len(shops_tomorrow))
+    length = len(shops_tomorrow)
+    if shops_tomorrow:
+        return render_template('tomorrow.html',shops=shops_tomorrow,l=length)
+    else:
+        return "No shops"
+
+@app.route('/today/slots/<int:id>')
+def today_slot(id):
+    today_date = datetime.date.today()
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[today_date,id])
+    duration = cursor.fetchone()
+    start = int(duration['start'])
+    end=  int(duration['end'])
+    return render_template('slot.html',s=start,e=end)
+
+@app.route('/tomorrow/slots/<int:id>')
+def tomorrow_slot(id):
+    tomorrow_date = date = datetime.date.today() + datetime.timedelta(days=1)
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[tomorrow_date,id])
+    duration = cursor.fetchone()
+    start = int(duration['start'])
+    end=  int(duration['end'])
+    return render_template('slot.html',s=start,e=end)
+    
 
 
 if __name__ == '__main__':
