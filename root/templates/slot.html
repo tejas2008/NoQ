@@ -20,8 +20,9 @@
   <head>
     <title>NoQ</title>
     <meta charset="utf-8">
+    <meta id="my-data" data-slots="{{slots}}">
+    <meta id="date" data-date="{{date}}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
@@ -49,6 +50,7 @@
       h1 {
         font-family: "Amatic SC", cursive;
       }
+
     </style>
   </head>
   <body class="goto-here">   
@@ -63,7 +65,7 @@
          <ul class="navbar-nav ml-auto"  >         
           <li class="nav-item"><a href="inventory.html" class="nav-link">Inventory</a></li>
         </ul>
-        <p style="text-align: center;"><a href="logout.html" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
+        <p style="text-align: center;"><a href="/logout" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
       </div>
     </div>
   </nav>
@@ -83,26 +85,26 @@
   <section class="ftco-section ftco-cart">
     <div style="overflow-x: auto;">
       <br>
-
+      <h5 style="text-align: center;">Book Slots for {{date}}</h5>
     <table style="width: 70%; margin-right:auto; margin-left: auto;"  >
     <tr>
         <th style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black;">Slot Timing</th>
         <th colspan="4" style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black;">Book Slots </th>
     </tr>
     {% for i in range(s,e+1,1) %}
-    <tr>
+    <tr class="rows">
         <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">{{i}}.00-{{i}}.30</td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 1</button></td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 2</button></td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 3</button></td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 4</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="myfunc(this.id,{{shopid}})" id="{{i}}.00-{{i}}.30-01" >Slot 1</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}})" id="{{i}}.00-{{i}}.30-02" >Slot 2</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}})" id="{{i}}.00-{{i}}.30-03" >Slot 3</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}})" id="{{i}}.00-{{i}}.30-04" >Slot 4</button></td>
    </tr>
-   <tr>
+   <tr class="rows">
     <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">{{i}}.30-{{i+1}}.00</td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 1</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 2</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 3</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 4</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="myfunc(this.id,{{shopid}})" id="{{i}}.30-{{i+1}}.00-01" >Slot 1</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}})" id="{{i}}.30-{{i+1}}.00-02" >Slot 2</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}})" id="{{i}}.30-{{i+1}}.00-03" >Slot 3</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}})" id="{{i}}.30-{{i+1}}.00-04" >Slot 4</button></td>
 </tr>
    {% endfor %}
 </table>
@@ -155,7 +157,7 @@
 
 <br>
 <footer>
-<section class="ftco-section img"  style="background-color: #82ae46;padding:0px;">
+<section class="ftco-section img foot"  style="background-color: #82ae46;padding:0px;">
     <div class="mouse">
       <a href="#" class="mouse-icon">
         <div class="mouse-wheel"><i class="fa fa-chevron-up" aria-hidden="true"></i></span></div>
@@ -171,7 +173,6 @@
         </div>
       </section>
     </footer>
-
 
 <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 <script src="../static/js/jquery.min.js"></script>
@@ -191,16 +192,53 @@
 <script src="../static/js/google-map.js"></script>
 <script src="../static/js/main.js"></script>
 <script>
-  function myfunc(slotid,shopid,date){
-
-    alert(slotid);
+  function myfunc(slotid,shopid){
+    var date = $('#date').data('date');
+    alert(slotid+" "+date);
     $.post('/slot/booking',{
       slotid:slotid,
       shopid:shopid,
       date:date
     });
-    
+    window.location.href = "/customer/tomorrow";
   }
+</script>
+<script>
+  var date = $('#date').data('date');
+  var x = document.getElementsByTagName("button")
+  var i,j;
+  var d = new Date();
+  var h = d.getHours();
+  var m = d.getMinutes();
+  var jsdate = d.getDate().toString()
+  console.log(slots);
+  // console.log(h+" "+m);
+  var slots = $('#my-data').data('slots');
+  slots = slots.split("'");
+    for(i=1;i<=x.length;i++){
+    for(j=3;j<slots.length*4;j+=4){
+    if(x[i].id==slots[j]){
+      console.log(1);
+      x[i].className = 'btn btn-dark'
+      x[i].disabled=true;
+    }
+    }
+    
+    if((parseInt(date.split("-")[2])).toString() == jsdate){
+      
+    if(parseInt(x[i].id.split(".",1)[0])<h){
+      x[i].className = 'btn btn-danger'
+      x[i].disabled = true;
+    }
+    if(parseInt(x[i].id.split(".",1)[0])<=h && parseInt(x[i].id.split("-",1)[0].split(".")[1])<=m){
+      x[i].className = 'btn btn-danger'
+      x[i].disabled = true;
+    }
+    }
+    }
+</script>
+<script>
+
 </script>
 </body>
 </html>

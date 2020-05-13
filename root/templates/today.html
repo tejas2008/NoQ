@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="../static/css/flaticon.css">
     <link rel="stylesheet" href="../static/css/icomoon.css">
 	<link rel="stylesheet" href="../static/css/style.css">
+
   </head>
   <body class="goto-here">
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -55,7 +56,7 @@
 	          <!-- <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li> -->
 
 			</ul>
-			<p style="text-align: center;"><a href="/customer/logout" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
+			<p style="text-align: center;"><a href="/logout" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
 	      </div>
 	    </div>
 	  </nav>
@@ -88,10 +89,10 @@
 </section>
     <section class="ftco-section">
     	<div class="container">
-    		<!-- <div class="card-deck"> -->
+    		<div class="card-deck">
 				{% for i in range(l) %}
 			
-				<div class="col-md-6 col-md-offset-3">
+				<div class="col-md-5" style="margin: auto;">
     				<div class="product">
     					<a href="#" class="img-prod"><img class="img-fluid" src="../static/images/test.png"  alt="First Shop">
     						<!--<span class="status">30%</span>-->
@@ -101,14 +102,14 @@
     						<h3><a href="#">{{shops[i]['shop_name']}}</a></h3>
     						<div class="d-flex">
     							<div class="pricing">
-		    						<p class="price card-text"><span>Address: {{shops[i]['address']}}<br>Owner: {{shops[i]['owner_name']}}<br>Phone: {{shops[i]['mobile']}}</span></p>
+		    						<p class="price card-text"><span>Address: {{shops[i]['address']}}<br>Owner: {{shops[i]['owner_name']}}<br>Phone: {{shops[i]['mobile']}}<br></span></p>
 		    					</div>
 	    					</div>
 	    					<div class="bottom-area d-flex px-3">
 	    						<div class="m-auto d-flex">
 									<form action="/today/slots" method="POST">
 										<input type="hidden" value="{{shops[i]['id_shop']}}" name="shopid">
-										<input type="submit" value="Submit" class="add-to-cart d-flex justify-content-center align-items-center text-center btn btn-success">
+										<input type="submit" value="Book Slot" class="add-to-cart d-flex justify-content-center align-items-center text-center btn btn-success">
 									</form>
 	    							<!-- <a href="/today/slots" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px;">
 	    								<span>Book Slots</span>
@@ -174,15 +175,13 @@
     						</div>
     					</div>
     				</div>-->
-				<!-- </div> -->
+				</div>
 				</div> 
 			</section>
-			<section class="ftco-section img"  style="background-color: #82ae46;padding:0px">
+			<section class="ftco-section img foot"  style="background-color: #82ae46;padding:0px;">
 				<div class="mouse">
-
-				
 				  <a href="#" class="mouse-icon">
-					<div class="mouse-wheel"><span class="ion-ios-arrow-up"><i class="fa fa-chevron-up" aria-hidden="true"></i></span></div>
+					<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
 				  </a>
 				</div>
 					<div class="row" >

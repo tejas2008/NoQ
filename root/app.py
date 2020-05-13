@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session,flash
+from flask import Flask, render_template, request, redirect, url_for, session,flash,make_response
 import datetime
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+import json
 app = Flask(__name__)
 
 # Change this to your secret key (can be anything, it's for extra protection)
@@ -216,28 +217,36 @@ def today():
 
 @app.route('/customer/tomorrow')
 def tomorrow():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    tomorrow_date = date = datetime.date.today() + datetime.timedelta(days=1)
-    cursor.execute('select distinct shop.shop_name,shop.owner_name,shop.address,shop.mobile,slotbook.id_shop from shop inner join slotbook on shop.shopid=slotbook.id_shop where slotbook.date=%s',[tomorrow_date,])
-    shops_tomorrow = cursor.fetchall()
-    print(shops_tomorrow,len(shops_tomorrow))
-    length = len(shops_tomorrow)
-    if shops_tomorrow:
-        return render_template('tomorrow.html',shops=shops_tomorrow,l=length)
-    else:
-        return "No shops"
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        tomorrow_date = date = datetime.date.today() + datetime.timedelta(days=1)
+        cursor.execute('select distinct shop.shop_name,shop.owner_name,shop.address,shop.mobile,slotbook.id_shop from shop inner join slotbook on shop.shopid=slotbook.id_shop where slotbook.date=%s',[tomorrow_date,])
+        shops_tomorrow = cursor.fetchall()
+        print(shops_tomorrow,len(shops_tomorrow))
+        length = len(shops_tomorrow)
+        if shops_tomorrow:
+            response = make_response(render_template('tomorrow.html',shops=shops_tomorrow,l=length))
+            # return render_template('tomorrow.html',shops=shops_tomorrow,l=length)
+            return response
+        else:
+            return "No shops"
 
 @app.route('/slot/booking',methods=['GET','POST'])
 def booking():
     if request.method=='POST':
         time = request.form['slotid']
         name = session['username']
-        mobile = ['mobile']
+        mobile = session['mobile']
         shopid = request.form['shopid']
         date = request.form['date']
-        # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        # cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
-        # mysql.connection.commit()
+        print(date)
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('select * from bookedslots where cus_mobile=%s and date=%s',[mobile,date])
+        exist = cursor.fetchone()
+        if exist:
+            print("Already exists")   
+        else:
+            cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
+            mysql.connection.commit()
         return redirect(url_for('tomorrow'))
 
 @app.route('/today/slots',methods=['GET','POST'])
@@ -249,7 +258,13 @@ def today_slot():
     duration = cursor.fetchone()
     start = int(duration['start'])
     end=  int(duration['end'])
-    return render_template('slot.html',s=start,e=end,shopid=shopid,date=today_date)
+    cursor.execute('select slot_time from bookedslots where shop_id=%s and date=%s',[shopid,today_date])
+    slots = cursor.fetchall()
+    print(slots)  
+    sl = len(slots) 
+    return render_template('slot.html',s=start,e=end,shopid=shopid,date=today_date,slots=slots)
+
+
 
 @app.route('/tomorrow/slots',methods=['GET','POST'])
 def tomorrow_slot():
@@ -261,7 +276,11 @@ def tomorrow_slot():
     print(duration)
     start = int(duration['start'])
     end=  int(duration['end'])
-    return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date)
+    cursor.execute('select slot_time from bookedslots where shop_id=%s and date=%s',[shopid,tomorrow_date])
+    slots = cursor.fetchall()
+    print(slots)  
+    sl = len(slots)
+    return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date,slots=slots)
 
 
 
