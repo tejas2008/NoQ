@@ -95,7 +95,7 @@
     		<!-- <div class="card-deck"> -->
 				{% for i in range(l) %}
 				<a href="/tomorrow/slots">
-    			<div class="col-md-6 col-md-offset-1">
+    			<div class="col-md-6">
     				<div class="product">
     					<a href="#" class="img-prod"><img class="img-fluid" src="../static/images/test.png"  alt="First Shop">
     						<div class="overlay"></div>
@@ -109,9 +109,13 @@
 	    					</div>
 	    					<div class="bottom-area d-flex px-3">
 	    						<div class="m-auto d-flex">
-	    							<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px;">
+									<form action="/tomorrow/slots" method="POST">
+										<input type="hidden" value="{{shops[i]['id_shop']}}" name="shopid">
+										<input type="submit" value="Submit" class="add-to-cart d-flex justify-content-center align-items-center text-center btn btn-success">
+									</form>
+									<!-- <a href="/tomorrow/{{shops[i]['id_shop']}}/slots" class="add-to-cart d-flex justify-content-center align-items-center text-center" style="height:50px; width:100px;">
 	    								<span>Book Slots</span>
-	    							</a>
+	    							</a> -->
     							</div>
     						</div>
     					</div>

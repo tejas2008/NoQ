@@ -82,9 +82,10 @@ def login1():
     return render_template('shoplogin.html',msg=msg)
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home",methods=['GET'])
 def home():
-    return render_template('index.html')
+    if request.method=='GET':
+        return render_template('index.html')
 
 
 
@@ -199,7 +200,7 @@ def display():
 
     return render_template('shopdash.html',date=date,session=session,msg=msg)
 
-@app.route('/customer/today')
+@app.route('/customer/today',methods=['GET','POST'])
 def today():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     today_date = datetime.date.today()
@@ -208,6 +209,7 @@ def today():
     print(shops_today,len(shops_today))
     length  =len(shops_today)
     if shops_today:
+        print(7)
         return render_template('today.html',shops=shops_today,l=length)
     else:
         return "No shops"
@@ -225,26 +227,42 @@ def tomorrow():
     else:
         return "No shops"
 
-@app.route('/today/slots/<int:id>')
-def today_slot(id):
+@app.route('/slot/booking',methods=['GET','POST'])
+def booking():
+    if request.method=='POST':
+        time = request.form['slotid']
+        name = session['username']
+        mobile = ['mobile']
+        shopid = request.form['shopid']
+        date = request.form['date']
+        # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        # cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
+        # mysql.connection.commit()
+        return redirect(url_for('tomorrow'))
+
+@app.route('/today/slots',methods=['GET','POST'])
+def today_slot():
     today_date = datetime.date.today()
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[today_date,id])
+    shopid = request.form['shopid']
+    cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[today_date,shopid])
     duration = cursor.fetchone()
     start = int(duration['start'])
     end=  int(duration['end'])
-    return render_template('slot.html',s=start,e=end)
+    return render_template('slot.html',s=start,e=end,shopid=shopid,date=today_date)
 
-@app.route('/tomorrow/slots/<int:id>')
-def tomorrow_slot(id):
+@app.route('/tomorrow/slots',methods=['GET','POST'])
+def tomorrow_slot():
     tomorrow_date = date = datetime.date.today() + datetime.timedelta(days=1)
+    shopid = request.form['shopid']
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[tomorrow_date,id])
+    cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[tomorrow_date,shopid])
     duration = cursor.fetchone()
+    print(duration)
     start = int(duration['start'])
     end=  int(duration['end'])
-    return render_template('slot.html',s=start,e=end)
-    
+    return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date)
+
 
 
 if __name__ == '__main__':

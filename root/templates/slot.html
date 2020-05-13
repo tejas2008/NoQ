@@ -45,6 +45,11 @@
     <link rel="stylesheet" href="../static/css/flaticon.css">
     <link rel="stylesheet" href="../static/css/icomoon.css">
     <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+      h1 {
+        font-family: "Amatic SC", cursive;
+      }
+    </style>
   </head>
   <body class="goto-here">   
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
@@ -74,57 +79,34 @@
         </div>
     </div>
   </div>
+  
   <section class="ftco-section ftco-cart">
     <div style="overflow-x: auto;">
       <br>
+
     <table style="width: 70%; margin-right:auto; margin-left: auto;"  >
     <tr>
         <th style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black;">Slot Timing</th>
         <th colspan="4" style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black;">Book Slots </th>
     </tr>
-   <tr>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">11:00-11:30</td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="alert('Slot Booked')">Slot 1</button></td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 2</button></td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 3</button></td>
-        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 4</button></td>
+    {% for i in range(s,e+1,1) %}
+    <tr>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">{{i}}.00-{{i}}.30</td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 1</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 2</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 3</button></td>
+        <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.00-{{i}}.30" >Slot 4</button></td>
    </tr>
    <tr>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">11:00-11:30</td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="alert('Slot Booked')">Slot 1</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 2</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 3</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 4</button></td>
-    </tr>
-    <tr>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">11:00-11:30</td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="alert('Slot Booked')">Slot 1</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 2</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 3</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 4</button></td>
-    </tr><tr>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">11:00-11:30</td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="alert('Slot Booked')">Slot 1</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 2</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 3</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 4</button></td>
-    </tr>
-    <tr>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">11:00-11:30</td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="alert('Slot Booked')">Slot 1</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 2</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 3</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 4</button></td>
-    </tr>
-    <tr>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">11:00-11:30</td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="alert('Slot Booked')">Slot 1</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 2</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 3</button></td>
-    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="alert('Slot Booked')">Slot 4</button></td>
-    </tr>
-  </div>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:80px; line-height:30px; color: black; padding: 8px;">{{i}}.30-{{i+1}}.00</td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px" onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 1</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 2</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 3</button></td>
+    <td style="text-align:center; border: 1px solid rgb(206, 204, 204); width:60px; line-height:30px; color: black; padding: 8px;"><button class="btn btn-success" type="submit" style="width:80px"onclick="myfunc(this.id,{{shopid}},{{date}})" id="{{i}}.30-{{i+1}}.00" >Slot 4</button></td>
+</tr>
+   {% endfor %}
 </table>
+</div>
 </section>
 
 
@@ -208,6 +190,17 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="../static/js/google-map.js"></script>
 <script src="../static/js/main.js"></script>
+<script>
+  function myfunc(slotid,shopid,date){
+
+    alert(slotid);
+    $.post('/slot/booking',{
+      slotid:slotid,
+      shopid:shopid,
+      date:date
+    });
     
+  }
+</script>
 </body>
 </html>
