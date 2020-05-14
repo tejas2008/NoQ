@@ -282,7 +282,18 @@ def tomorrow_slot():
     sl = len(slots)
     return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date,slots=slots)
 
-
+@app.route('/booked/customer',methods=['GET','POST'])
+def booked_slots():
+    today_date = datetime.date.today()
+    shopid = session['id']
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM hackathon.bookedslots where date=%s and shop_id=%s order by cast(slot_time as unsigned);',[today_date,shopid])
+    booked_slots = cursor.fetchall()
+    print(booked_slots)
+    print(booked_slots[0]['slot_time'][:-3])
+    length = len(booked_slots)
+    print(length)
+    return render_template('shopview.html',booked=booked_slots,l=length)
 
 if __name__ == '__main__':
     app.run(debug=True)

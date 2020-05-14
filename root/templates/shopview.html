@@ -30,6 +30,26 @@
     <link rel="stylesheet" href="../static/css/style.css">
   </head>
   <body class="goto-here">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html" style="text-transform: none; position: relative;right:25px;">NoQ</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse " id="ftco-nav" >
+	        <ul class="navbar-nav ml-auto"  >
+	          <li class="nav-item active"><a href="index.html" class="nav-link">dashboard</a></li>
+	         
+	          <li class="nav-item"><a href="#" class="nav-link">customise items</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">view bookings   </a></li>
+
+			</ul>
+			<p style="text-align: center;"><a href="/customer/login" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
+	      </div>
+	    </div>
+	  </nav>
     <div class="hero-wrap hero-bread" style="background-image: url('../static/images/category-1.jpg');">
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -41,9 +61,10 @@
         </div>
       </div>
 
-      <section class="ftco-section ftco-cart">
+      <section class="ftco-section ftco-cart" style="padding: 0px!important;">
       <div class="col-md-12 ftco-animate fadeInUp ftco-animated">
         <div class="cart-list">
+
           <table class="table">
             <thead class="thead-primary">
               <tr class="text-center">
@@ -53,25 +74,15 @@
                 </tr>
             </thead>
             <tbody>
+              {% for i in range(0,l,1) %}
               <tr class="text-center">                                
-                <td class="product-name"><h3>Cust1</h3></div></td>                
+                <td class="product-name"><h3>{{booked[i]['cus_name']}}</h3></div></td>                
                 <td class="product-name">
-                  <h3>9876543210</h3>
+                  <h3>{{booked[i]['cus_mobile']}}</h3>
                 </td>                
-                <td class="product-name"><h3>3:00pm</h3></td>            
-                
-                
+                <td class="product-name"><h3>{{booked[i]['slot_time'][:-3]}}</h3></td>            
               </tr><!-- END TR-->
-              <tr class="text-center">                                
-                <td class="product-name"><h3>Cust2</h3></div></td>                
-                <td class="product-name">
-                  <h3>9876543210</h3>
-                </td>                
-                <td class="product-name"><h3>3:20pm</h3></td>            
-                
-                
-              </tr><!-- END TR-->
-
+              {% endfor %}
               
             </tbody>
           </table>
@@ -88,7 +99,7 @@
             </div>
                 <div class="row" >
                   <div class="col-md-12 text-center" > 
-        
+                  
                     <p style="padding-top: 35px;padding-bottom: 10px;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                   Copyright &copy;<script>document.write(new Date().getFullYear());</script> |  All rights reserved 
                                 </p>
