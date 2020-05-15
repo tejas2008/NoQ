@@ -195,12 +195,12 @@
   function myfunc(slotid,shopid){
     var date = $('#date').data('date');
     alert(slotid+" "+date);
-    $.post('/slot/booking',{
+    $.post('/customer/dashboard',{
       slotid:slotid,
       shopid:shopid,
       date:date
     });
-    window.location.href = "/customer/tomorrow";
+    window.location.href = "/customer/dashboard";
   }
 </script>
 <script>

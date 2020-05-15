@@ -42,7 +42,7 @@ def login():
             session['mobile'] = customer['mobileno']
             session['region'] = customer['region']
             # Redirect to home page
-            return redirect(url_for('today'))
+            return redirect(url_for('customer_display'))
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
@@ -230,25 +230,6 @@ def tomorrow():
         else:
             return "No shops"
 
-@app.route('/slot/booking',methods=['GET','POST'])
-def booking():
-    if request.method=='POST':
-        time = request.form['slotid']
-        name = session['username']
-        mobile = session['mobile']
-        shopid = request.form['shopid']
-        date = request.form['date']
-        print(date)
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('select * from bookedslots where cus_mobile=%s and date=%s',[mobile,date])
-        exist = cursor.fetchone()
-        if exist:
-            print("Already exists")   
-        else:
-            cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
-            mysql.connection.commit()
-        return redirect(url_for('tomorrow'))
-
 @app.route('/today/slots',methods=['GET','POST'])
 def today_slot():
     today_date = datetime.date.today()
@@ -289,11 +270,41 @@ def booked_slots():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM hackathon.bookedslots where date=%s and shop_id=%s order by cast(slot_time as unsigned);',[today_date,shopid])
     booked_slots = cursor.fetchall()
-    print(booked_slots)
-    print(booked_slots[0]['slot_time'][:-3])
+    # print(booked_slots)
+    # print(booked_slots[0]['slot_time'][:-3])
     length = len(booked_slots)
     print(length)
     return render_template('shopview.html',booked=booked_slots,l=length)
+
+@app.route('/customer/dashboard',methods=['GET','POST'])
+def customer_display():
+    
+    if request.method=='GET': 
+        now = datetime.datetime.now()
+        date = datetime.date.today()
+        print(date)
+        mobile = session['mobile']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM hackathon.bookedslots where cus_mobile=%s order by date;',[mobile])
+        booked_slots = cursor.fetchall()
+        length = len(booked_slots)
+        return render_template('cusdash.html',date=date,session=session,booked=booked_slots,l=length)
+    elif request.method=='POST':
+        time = request.form['slotid']
+        name = session['username']
+        mobile = session['mobile']
+        shopid = request.form['shopid']
+        date = request.form['date']
+        print(date)
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('select * from bookedslots where cus_mobile=%s and date=%s',[mobile,date])
+        exist = cursor.fetchone()
+        if exist:
+            msg='You have already booked a slot for ' + str(date)
+            print(msg)
+        else:
+            cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
+            mysql.connection.commit()
 
 if __name__ == '__main__':
     app.run(debug=True)

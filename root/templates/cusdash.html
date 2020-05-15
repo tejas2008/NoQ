@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Shopkeeper Dashboard</title>
+    <title>Customer Dashboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -28,6 +28,12 @@
     <link rel="stylesheet" href="../static/css/flaticon.css">
     <link rel="stylesheet" href="../static/css/icomoon.css">
     <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+    tr:nth-child(even){
+      background-color: rgb(240, 240, 240);
+    }
+    </style>
+    
   </head>
   <body class="goto-here">
 
@@ -40,10 +46,9 @@
 
 	      <div class="collapse navbar-collapse " id="ftco-nav" >
 	        <ul class="navbar-nav ml-auto"  >
-	          <li class="nav-item active"><a href="/dashboard" class="nav-link">dashboard</a></li>
+	          <!-- <li class="nav-item active"><a href="index.html" class="nav-link">dashboard</a></li> -->
 	         
-	          <li class="nav-item"><a href="#" class="nav-link">customise items</a></li>
-	          <li class="nav-item"><a href="/booked/customer" class="nav-link">view bookings   </a></li>
+	          <li class="nav-item"><a href="/customer/today" class="nav-link">Book Slots</a></li>
 
 			</ul>
 			<p style="text-align: center;"><a href="/customer/login" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
@@ -56,35 +61,59 @@
           <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
                 <h1 class="mb-0 bread">dashboard</h1>
-                <p class="breadcrumbs">inform the customers about functioning of your store</p>
+                <p class="breadcrumbs">View Details about your slots booked</p>
                </div>
           </div>
         </div>
       </div>
 
       <section class="ftco-section testimony-section">
-         <div class="row justify-content-center mb-5 pb-3" >
-            <div class="col-md-7 heading-section ftco-animate text-center fadeInUp ftco-animated" style="color:black;font-family: Poppins;">
+         <div class="row justify-content-center" >
+            <div class="col-md-7 heading-section ftco-animate text-center fadeInUp ftco-animated" style="color:black;font-family: Poppins;"> 
                 <!-- <span class="subheading">Your Shop Details</span> -->
               <div class="alert alert-warning" role="alert">
                   {{date}}
-              </div>
-              <h2 class="mb-4" style="font-size: 25px;"><br>Your Shop Details</h2>
-              <p>Shop Name : {{session['shop_name']}}</p>
-              <p>Owner Name : {{session['owner_name']}}</p>
-              <p>Shop Address : {{session['address']}}</p>
+              </div> 
+              <h2 class="mb-4" style="font-size: 25px;"><br>Your Details</h2>
+              <p>Name : {{session['username']}}</p>
               <p>Region : {{session['region']}}</p>
               <p>Contact Number : {{session['mobile']}}</p>
-              <h2 class="mb-4" style="font-size: 25px;"><br>Set slot for {{date}}</h2>
-              <form method="POST">
-                <p>Start time (24 hour format) :  <input type="time" id="start" name="start"></p>
-              <p>End time (24 hour format) :  <input type="time" id="end" name="end"></p>
-              <input type="submit" value="Set" class="btn btn-success">
-              </form>
-        
             </div>
           </div>      
-    </section>    
+    </section>   
+    <h2 class="mb-4" style="font-size: 25px; text-align: center;">Your Booked Slots</h2>
+    <section class="ftco-section ftco-cart" style="padding: 0px!important;">
+      <div class="col-md-12 ftco-animate fadeInUp ftco-animated">
+        <div class="cart-list" style="text-align: center; color:black">
+          {% if l==0 %}
+          <h6>You have no slot bookings. Go to Book Slots to book a slot in a shop nearby</h6>
+          <br>
+          {% else %}
+          <table class="table">
+            <thead class="thead-primary">
+              <tr class="text-center" style="font-weight: bold; font-size: 20px;  ">
+                <th>SHOP ID</th>
+                <th>DATE</th>
+                <th>SLOT TIMING</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for i in range(0,l,1) %}
+              <tr class="text-center ">                                
+                <td class="product-name"><h3>{{booked[i]['shop_id']}}</h3></div></td>                
+                <td class="product-name">
+                  <h3>{{booked[i]['date']}}</h3>
+                </td>                
+                <td class="product-name"><h3>{{booked[i]['slot_time'][:-3]}}</h3></td>            
+              </tr><!-- END TR-->
+              {% endfor %}
+              
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+      </div>
+    </section> 
     
         <section class="ftco-section img"  style="background-color: #82ae46;padding:0px">
             <div class="mouse">
