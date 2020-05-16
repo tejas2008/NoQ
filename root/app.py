@@ -241,8 +241,8 @@ def today_slot():
     end=  int(duration['end'])
     cursor.execute('select slot_time from bookedslots where shop_id=%s and date=%s',[shopid,today_date])
     slots = cursor.fetchall()
-    print(slots)  
-    sl = len(slots) 
+    print(slots)
+    sl = len(slots)
     return render_template('slot.html',s=start,e=end,shopid=shopid,date=today_date,slots=slots)
 
 
@@ -259,7 +259,7 @@ def tomorrow_slot():
     end=  int(duration['end'])
     cursor.execute('select slot_time from bookedslots where shop_id=%s and date=%s',[shopid,tomorrow_date])
     slots = cursor.fetchall()
-    print(slots)  
+    print(slots)
     sl = len(slots)
     return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date,slots=slots)
 
@@ -278,8 +278,8 @@ def booked_slots():
 
 @app.route('/customer/dashboard',methods=['GET','POST'])
 def customer_display():
-    
-    if request.method=='GET': 
+
+    if request.method=='GET':
         now = datetime.datetime.now()
         date = datetime.date.today()
         print(date)
@@ -306,6 +306,58 @@ def customer_display():
             cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
             mysql.connection.commit()
 
+@app.route('/shopkeeper/<int:shop_id>', methods=['POST', 'GET'])
+def shopkeeper_inventory(shop_id):
+	cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+	if request.method == 'POST':
+		name = request.form['name']
+		unit = request.form['unit']
+		quantity = request.form['quantity']
+		shop = shop_id
+		cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+		cursor.execute('SELECT * FROM inventory WHERE name = %s AND shop_id = %s',(name,shop,))
+		data = cursor.fetchone()
+		if data:
+			cursor.execute('UPDATE inventory SET QUANTITY = %s WHERE name = %s AND SHOP_ID = %s', (int(quantity) + data['quantity'] ,name,shop,))
+		else:
+			cursor.execute('INSERT INTO inventory VALUES (NULL, %s, %s, %s, %s)', (name,unit,quantity,shop,))
+		mysql.connection.commit()
+		cursor.close()
+		return redirect('/shopkeeper/' + str(shop_id))
+	else:
+		cursor.execute('SELECT * FROM inventory WHERE shop_id = %s',(shop_id,))
+		items = cursor.fetchall()
+		cursor.close()
+		return render_template('shopinv.html', data = items, shop = shop_id)
+
+@app.route('/shopkeeper/<int:shop_id>/delete/<int:item_id>')
+def remove_item(shop_id,item_id):
+	cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+	cursor.execute('DELETE FROM inventory WHERE id = %s',(item_id,))
+	mysql.connection.commit()
+	cursor.close()
+	return redirect('/shopkeeper/' + str(shop_id))
+
+@app.route('/shopkeeper/<int:shop_id>/edit/<int:item_id>', methods=['GET', 'POST'])
+def edit_qty(shop_id,item_id):
+	cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+	cursor.execute('SELECT * FROM inventory WHERE id = %s',(item_id,))
+	item = cursor.fetchone()
+	val = int(request.form['quantity'])
+	if not(val < 0):
+		cursor.execute('UPDATE inventory SET quantity = %s WHERE id = %s',(val,item_id,))
+		mysql.connection.commit()
+	cursor.close()
+	return redirect('/shopkeeper/' + str(shop_id))
+
+
+@app.route('/customer/<int:shop_id>')
+def customer_inventory(shop_id):
+	cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+	cursor.execute('SELECT * FROM inventory WHERE shop_id = %s',(shop_id,))
+	items = cursor.fetchall()
+	cursor.close()
+	return render_template('cusinv.html', data = items, shop = shop_id)
+
 if __name__ == '__main__':
     app.run(debug=True)
-
