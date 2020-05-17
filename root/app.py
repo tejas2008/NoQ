@@ -44,6 +44,10 @@ def login():
     return render_template('cuslogin.html',msg=msg)
 
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    return render_template('contact.html')
+
 @app.route('/shop/login', methods=['GET', 'POST'])
 def login1():
     msg=''
