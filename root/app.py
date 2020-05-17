@@ -1,71 +1,59 @@
-from flask import Flask, render_template, request, redirect, url_for, session,flash,make_response
+# Imports:
+from flask import Flask, render_template, request, redirect, url_for, session,flash,make_response,session
 import datetime
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 import json
+
+
+# Configs:
 app = Flask(__name__)
 
-# Change this to your secret key (can be anything, it's for extra protection)
 app.secret_key = 'secret'
 
-# Enter your database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'hackathon'
-
-# Intialize MySQL
 mysql = MySQL(app)
+
 
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
+
+# Routes:
 @app.route('/customer/login', methods=['GET', 'POST'])
 def login():
-    # Check if "username" and "password" POST requests exist (user submitted form)
     msg=''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
-        # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM customer WHERE username = %s AND password = %s', (username, password,))
-        # Fetch one record and return result
         customer = cursor.fetchone()
-        # If account exists in accounts table in out database
         if customer:
-            # Create session data, we can access this data in other routes
             session['loggedin'] = True
             session['id'] = customer['cus_id']
             session['username'] = customer['username']
             session['mobile'] = customer['mobileno']
             session['region'] = customer['region']
-            # Redirect to home page
             return redirect(url_for('customer_display'))
         else:
-            # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
-    # Show the login form with message (if any)
     return render_template('cuslogin.html',msg=msg)
 
 
 @app.route('/shop/login', methods=['GET', 'POST'])
 def login1():
-    # Check if "username" and "password" POST requests exist (user submitted form)
     msg=''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
-        # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM shop WHERE username = %s AND password = %s', (username, password,))
-        # Fetch one record and return result
         shop = cursor.fetchone()
-        # If account exists in accounts table in out database
         if shop:
-            # Create session data, we can access this data in other routes
             session['loggedin'] = True
             session['id'] = shop['shopid']
             session['username'] = shop['username']
@@ -74,13 +62,11 @@ def login1():
             session['address'] = shop['address']
             session['shop_name'] = shop['shop_name']
             session['owner_name'] = shop['owner_name']
-            # Redirect to home page
             return redirect(url_for('display'))
         else:
-            # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
-    # Show the login form with message (if any)
     return render_template('shoplogin.html',msg=msg)
+
 
 @app.route("/")
 @app.route("/home",methods=['GET'])
@@ -89,32 +75,27 @@ def home():
         return render_template('index.html')
 
 
-
 @app.route('/logout')
 def logout():
-    # Remove session data, this will log the user out
    session.pop('loggedin', None)
    session.pop('id', None)
    session.pop('username', None)
-   # Redirect to login page
    return redirect(url_for('home'))
+
+
 
 @app.route('/customer/register', methods=['GET', 'POST'])
 def register():
-    # Check if "username", "password" and "email" POST requests exist (user submitted form)
     msg =''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
-        # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
         mobile = request.form['mobile']
         region = request.form['region']
-                # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM customer WHERE username = %s', (username,))
         account = cursor.fetchone()
-        # If account exists show error and validation checks
         if account:
             msg = 'Account already exists!'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
@@ -124,24 +105,20 @@ def register():
         elif not username or not password or not email or not mobile:
             msg = 'Please fill out the form!'
         else:
-            # Account doesnt exists and the form data is valid, now insert new account into accounts table
             cursor.execute('INSERT INTO customer VALUES (NULL, %s, %s, %s,%s,%s)', (username, password, email,mobile,region))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return render_template('cuslogin.html')
     elif request.method == 'POST':
-        # Form is empty... (no POST data)
         msg = 'Please fill out the form!'
-    # Show registration form with message (if any)
     return render_template('cusregister.html',msg=msg)
+
 
 
 @app.route('/shop/register', methods=['GET', 'POST'])
 def register1():
-    # Check if "username", "password" and "email" POST requests exist (user submitted form)
     msg =''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        # Create variables for easy access
         username = request.form['username']
         password = request.form['password']
         ownername = request.form['ownername']
@@ -149,11 +126,9 @@ def register1():
         mobile = request.form['mobile']
         address = request.form['address']
         region = request.form['region']
-                # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM shop WHERE username = %s', (username,))
         shop = cursor.fetchone()
-        # If account exists show error and validation checks
         if shop:
             msg = 'Account already exists!'
         elif not re.match(r'[A-Za-z0-9]+', username):
@@ -163,22 +138,22 @@ def register1():
             msg = 'Please fill out the form!'
         else:
             print(3)
-            # Account doesnt exists and the form data is valid, now insert new account into accounts table
             cursor.execute('INSERT INTO shop VALUES (NULL, %s, %s, %s,%s,%s,%s,%s)', (ownername,shopname,region,address,mobile,username, password))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return render_template('shoplogin.html')
     elif request.method == 'POST':
-        # Form is empty... (no POST data)
         print(2)
         msg = 'Please fill out the form!'
-    # Show registration form with message (if any)
     return render_template('shopregister.html',msg=msg)
+
+
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def display():
     msg=''
     now = datetime.datetime.now()
+    shopid = session['id']
     eve = now.replace(hour=19, minute=0, second=0, microsecond=0)
     if now <= eve:
         date = datetime.date.today() + datetime.timedelta(days=1)
@@ -193,13 +168,15 @@ def display():
         boolean = cursor.fetchone()
         if boolean:
             msg = 'Slot has been already placed for'
-            return render_template('shopdash.html',date=date,session=session,msg=msg)
+            return render_template('shopdash.html',date=date,session=session,msg=msg,shopid=shopid)
         else:
             cursor.execute('INSERT INTO slotbook VALUES (%s, %s, %s,%s)', (shopid,date, start, end,))
             mysql.connection.commit()
             msg = 'Slot has been Successfully placed for'
 
-    return render_template('shopdash.html',date=date,session=session,msg=msg)
+    return render_template('shopdash.html',date=date,session=session,msg=msg,shopid=shopid)
+
+
 
 @app.route('/customer/today',methods=['GET','POST'])
 def today():
@@ -210,10 +187,11 @@ def today():
     print(shops_today,len(shops_today))
     length  =len(shops_today)
     if shops_today:
-        print(7)
-        return render_template('today.html',shops=shops_today,l=length)
+        return render_template('today.html',shops=shops_today,l=length,date=today_date)
     else:
-        return "No shops"
+        return render_template('noshop.html',shops=shops_today,l=length,date=today_date)
+
+
 
 @app.route('/customer/tomorrow')
 def tomorrow():
@@ -224,11 +202,12 @@ def tomorrow():
         print(shops_tomorrow,len(shops_tomorrow))
         length = len(shops_tomorrow)
         if shops_tomorrow:
-            response = make_response(render_template('tomorrow.html',shops=shops_tomorrow,l=length))
-            # return render_template('tomorrow.html',shops=shops_tomorrow,l=length)
+            response = make_response(render_template('tomorrow.html',shops=shops_tomorrow,l=length,date=tomorrow_date))
             return response
         else:
-            return "No shops"
+            return render_template('npshop.html',shops=shops_tomorrow,l=length,date=tomorrow_date)
+
+
 
 @app.route('/today/slots',methods=['GET','POST'])
 def today_slot():
@@ -263,6 +242,8 @@ def tomorrow_slot():
     sl = len(slots)
     return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date,slots=slots)
 
+
+
 @app.route('/booked/customer',methods=['GET','POST'])
 def booked_slots():
     today_date = datetime.date.today()
@@ -270,11 +251,11 @@ def booked_slots():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM hackathon.bookedslots where date=%s and shop_id=%s order by cast(slot_time as unsigned);',[today_date,shopid])
     booked_slots = cursor.fetchall()
-    # print(booked_slots)
-    # print(booked_slots[0]['slot_time'][:-3])
     length = len(booked_slots)
     print(length)
-    return render_template('shopview.html',booked=booked_slots,l=length)
+    return render_template('shopview.html',booked=booked_slots,l=length,shop=shopid)
+
+
 
 @app.route('/customer/dashboard',methods=['GET','POST'])
 def customer_display():
@@ -306,6 +287,8 @@ def customer_display():
             cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
             mysql.connection.commit()
 
+
+
 @app.route('/shopkeeper/<int:shop_id>', methods=['POST', 'GET'])
 def shopkeeper_inventory(shop_id):
 	cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -328,7 +311,9 @@ def shopkeeper_inventory(shop_id):
 		cursor.execute('SELECT * FROM inventory WHERE shop_id = %s',(shop_id,))
 		items = cursor.fetchall()
 		cursor.close()
-		return render_template('shopinv.html', data = items, shop = shop_id)
+		return render_template('shopinv.html', data = items, shop=shop_id)
+
+
 
 @app.route('/shopkeeper/<int:shop_id>/delete/<int:item_id>')
 def remove_item(shop_id,item_id):
@@ -337,6 +322,8 @@ def remove_item(shop_id,item_id):
 	mysql.connection.commit()
 	cursor.close()
 	return redirect('/shopkeeper/' + str(shop_id))
+
+
 
 @app.route('/shopkeeper/<int:shop_id>/edit/<int:item_id>', methods=['GET', 'POST'])
 def edit_qty(shop_id,item_id):
@@ -351,6 +338,7 @@ def edit_qty(shop_id,item_id):
 	return redirect('/shopkeeper/' + str(shop_id))
 
 
+
 @app.route('/customer/<int:shop_id>')
 def customer_inventory(shop_id):
 	cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -358,6 +346,11 @@ def customer_inventory(shop_id):
 	items = cursor.fetchall()
 	cursor.close()
 	return render_template('cusinv.html', data = items, shop = shop_id)
+
+
+@app.route('/about',methods=['GET','POST'])
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

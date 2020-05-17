@@ -62,8 +62,9 @@
       </button>
 
       <div class="collapse navbar-collapse " id="ftco-nav" >
-         <ul class="navbar-nav ml-auto"  >         
-          <li class="nav-item"><a href="inventory.html" class="nav-link">Inventory</a></li>
+        
+         <ul class="navbar-nav ml-auto">       
+          <li class="nav-item"><a href="/customer/{{shopid}}" class="nav-link">Inventory</a></li>
         </ul>
         <p style="text-align: center;"><a href="/logout" class="btn btn-primary" style="position: relative;top:7px">LOGOUT</a></p>
       </div>
@@ -211,14 +212,11 @@
   var h = d.getHours();
   var m = d.getMinutes();
   var jsdate = d.getDate().toString()
-  console.log(slots);
-  // console.log(h+" "+m);
   var slots = $('#my-data').data('slots');
   slots = slots.split("'");
     for(i=1;i<=x.length;i++){
     for(j=3;j<slots.length*4;j+=4){
     if(x[i].id==slots[j]){
-      console.log(1);
       x[i].className = 'btn btn-dark'
       x[i].disabled=true;
     }
@@ -238,7 +236,23 @@
     }
 </script>
 <script>
-
+  var date = $('#date').data('date');
+  var d = new Date();
+  var mth = (d.getMonth()+1)
+  if (mth<10){
+  var today = d.getFullYear()+"-"+"0"+(d.getMonth()+1)+"-"+d.getDate()
+  }
+  else{
+    var today = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()
+  }
+  var d1 = today.toString()
+  if(date == d1){
+    $(".nav-item").show()
+  }
+  else{
+    $(".nav-item").hide()
+  }
+  
 </script>
 </body>
 </html>
