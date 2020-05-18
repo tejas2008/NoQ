@@ -352,5 +352,13 @@ def customer_inventory(shop_id):
 def about():
     return render_template('about.html')
 
+
+
+@app.route('/service-worker.js')
+def sw():
+    return app.send_static_file('service-worker.js')
+
+    
+
 if __name__ == '__main__':
     app.run(debug=True)
