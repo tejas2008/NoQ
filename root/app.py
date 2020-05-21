@@ -4,6 +4,7 @@ import datetime
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+import os
 
 
 # Configs:
@@ -208,7 +209,7 @@ def tomorrow():
             response = make_response(render_template('tomorrow.html',shops=shops_tomorrow,l=length,date=tomorrow_date))
             return response
         else:
-            return render_template('npshop.html',shops=shops_tomorrow,l=length,date=tomorrow_date)
+            return render_template('noshop.html',shops=shops_tomorrow,l=length,date=tomorrow_date)
 
 
 
@@ -362,7 +363,7 @@ def sw():
     return app.send_static_file('service-worker.js')
 
 
-
+port = int(os.getenv('PORT', 5001))
 
 if __name__ == '__main__':
-    app.run(host ='0.0.0.0', port = 5001, debug = True)
+    app.run(host ='0.0.0.0', port = port, debug = True)
