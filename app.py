@@ -12,10 +12,10 @@ app = Flask(__name__)
 
 app.secret_key = 'secret'
 
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'hackathon'
+app.config['MYSQL_HOST'] = 'b12wunhvgwb3vymtqngg-mysql.services.clever-cloud.com'
+app.config['MYSQL_USER'] = 'umo0wrj8n1rqnx90'
+app.config['MYSQL_PASSWORD'] = 'ETintB86zfDXSCCMrspY'
+app.config['MYSQL_DB'] = 'b12wunhvgwb3vymtqngg'
 mysql = MySQL(app)
 
 
@@ -253,7 +253,7 @@ def booked_slots():
     today_date = datetime.date.today()
     shopid = session['id']
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM hackathon.bookedslots where date=%s and shop_id=%s order by cast(slot_time as unsigned);',[today_date,shopid])
+    cursor.execute('SELECT * FROM bookedslots where date=%s and shop_id=%s order by cast(slot_time as unsigned);',[today_date,shopid])
     booked_slots = cursor.fetchall()
     length = len(booked_slots)
     print(length)
@@ -270,7 +270,7 @@ def customer_display():
         print(date)
         mobile = session['mobile']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM hackathon.bookedslots where cus_mobile=%s order by date;',[mobile])
+        cursor.execute('SELECT * FROM bookedslots where cus_mobile=%s order by date;',[mobile])
         booked_slots = cursor.fetchall()
         length = len(booked_slots)
         return render_template('cusdash.html',date=date,session=session,booked=booked_slots,l=length)
