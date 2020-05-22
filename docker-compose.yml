@@ -12,7 +12,7 @@ services:
     ports:
       - "32000:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ETintB86zfDXSCCMrspY
     #   MYSQL_USER: 
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: hackathon
+      MYSQL_PASSWORD: ETintB86zfDXSCCMrspY
+      MYSQL_DATABASE: b12wunhvgwb3vymtqngg
