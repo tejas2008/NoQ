@@ -1590,7 +1590,7 @@ pre {
 
 .form-control {
   display: block;
-  width: 70%;
+  width: 90%;
   height: calc(2.25rem + 2px);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -6617,7 +6617,7 @@ button.bg-dark:focus {
   padding-left: 1rem !important; }
 
 .p-4 {
-  padding: 1.5rem !important; }
+  padding: 1.5rem ; }
 
 .pt-4,
 .py-4 {
@@ -8242,6 +8242,7 @@ h1, h2, h3, h4, h5,
     content: '';
     opacity: .6;
     width: 50%;
+    
     background: #82ae46; }
   .hero-wrap .slider-text {
     color: #fff;
@@ -8420,6 +8421,9 @@ h1, h2, h3, h4, h5,
           font-weight: 400;
           font-family: "Amatic SC", cursive; }
           @media (max-width: 767.98px) {
+            /* .owl-carousel .home-slider .slider-item{
+              height: 10%;
+            } */
             .owl-carousel.home-slider .slider-item .slider-text h1 {
               font-size: 40px; } }
         .owl-carousel.home-slider .slider-item .slider-text p {
