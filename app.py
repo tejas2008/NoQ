@@ -193,7 +193,7 @@ def today():
     if shops_today:
         return render_template('today.html',shops=shops_today,l=length,date=today_date)
     else:
-        return render_template('noshop.html',shops=shops_today,l=length,date=today_date)
+        return render_template('noshoptoday.html',shops=shops_today,l=length,date=today_date)
 
 
 
@@ -209,7 +209,7 @@ def tomorrow():
             response = make_response(render_template('tomorrow.html',shops=shops_tomorrow,l=length,date=tomorrow_date))
             return response
         else:
-            return render_template('noshop.html',shops=shops_tomorrow,l=length,date=tomorrow_date)
+            return render_template('noshoptomorrow.html',shops=shops_tomorrow,l=length,date=tomorrow_date)
 
 
 
