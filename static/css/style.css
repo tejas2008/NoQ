@@ -8399,7 +8399,9 @@ h1, h2, h3, h4, h5,
         left: 0;
         right: 0;
         background: #000000;
-        opacity: .2; }
+        opacity: .2;
+        
+      }
       .owl-carousel.home-slider .slider-item .slider-text {
         height: 650px;
         z-index: 0; }
