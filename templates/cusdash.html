@@ -94,7 +94,7 @@
           <table class="table">
             <thead class="thead-primary">
               <tr class="text-center" style="font-weight: bold; font-size: 20px;  ">
-                <th>SHOP ID</th>
+                <th>SHOP NAME</th>
                 <th>DATE</th>
                 <th>SLOT TIMING</th>
                 </tr>
@@ -102,7 +102,7 @@
             <tbody>
               {% for i in range(0,l,1) %}
               <tr class="text-center ">                                
-                <td class="product-name"><h3>{{booked[i]['shop_id']}}</h3></div></td>                
+                <td class="product-name"><h3>{{name[i]['shop_name']}}</h3></div></td>                
                 <td class="product-name">
                   <h3>{{booked[i]['date']}}</h3>
                 </td>                

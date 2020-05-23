@@ -5,6 +5,8 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
 import os
+import twilio
+from twilio.rest import Client
 
 
 # Configs:
@@ -272,8 +274,14 @@ def customer_display():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM bookedslots where cus_mobile=%s order by date;',[mobile])
         booked_slots = cursor.fetchall()
+        print(booked_slots[0]['shop_id'])
+        shopname=[]
+        for k  in range(len(booked_slots)):
+            cursor.execute('select shop_name from shop where shopid=%s',[booked_slots[k]['shop_id']])
+            shop = cursor.fetchone()
+            shopname.append(shop)
         length = len(booked_slots)
-        return render_template('cusdash.html',date=date,session=session,booked=booked_slots,l=length)
+        return render_template('cusdash.html',date=date,session=session,booked=booked_slots,l=length,name=shopname)
     elif request.method=='POST':
         time = request.form['slotid']
         name = session['username']
@@ -288,8 +296,20 @@ def customer_display():
             msg='You have already booked a slot for ' + str(date)
             print(msg)
         else:
+            account_sid = 'AC9aebab4983c5b034de8211749cd7d2ec'
+            auth_token = 'c212434089c76ef41009330ca3ba04ee'
+            client = Client(account_sid, auth_token)
+            body = 'Your slot has been successfully placed for '+date+' at '+time[:-3]+'.'
+            message = client.messages.create(
+                                        body=body,      
+                                        from_='+12404144684',
+                                        to='+918652194061'
+                                    )
+
+            print(message.sid)
             cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
             mysql.connection.commit()
+            
 
 
 
