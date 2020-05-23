@@ -296,14 +296,14 @@ def customer_display():
             msg='You have already booked a slot for ' + str(date)
             print(msg)
         else:
-            account_sid = 'AC9aebab4983c5b034de8211749cd7d2ec'
-            auth_token = 'c212434089c76ef41009330ca3ba04ee'
+            account_sid = 'your_account_sid'
+            auth_token = 'your_account_token'
             client = Client(account_sid, auth_token)
             body = 'Your slot has been successfully placed for '+date+' at '+time[:-3]+'.'
             message = client.messages.create(
                                         body=body,      
-                                        from_='+12404144684',
-                                        to='+918652194061'
+                                        from_='your_twilio_number',
+                                        to='customer_mobile_number'
                                     )
 
             print(message.sid)
