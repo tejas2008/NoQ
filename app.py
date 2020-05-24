@@ -140,16 +140,16 @@ def register1():
         elif not re.match(r'[A-Za-z0-9]+', username):
             msg = 'Username must contain only characters and numbers!'
         elif not username or not password or not mobile or not address or not ownername or not shopname:
-            print(1)
+            # print(1)
             msg = 'Please fill out the form!'
         else:
-            print(3)
+            # print(3)
             cursor.execute('INSERT INTO shop VALUES (NULL, %s, %s, %s,%s,%s,%s,%s)', (ownername,shopname,region,address,mobile,username, password))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
             return render_template('shoplogin.html')
     elif request.method == 'POST':
-        print(2)
+        # print(2)
         msg = 'Please fill out the form!'
     return render_template('shopregister.html',msg=msg)
 
@@ -190,7 +190,7 @@ def today():
     today_date = datetime.date.today()
     cursor.execute('select distinct shop.shop_name,shop.owner_name,shop.address,shop.mobile,slotbook.id_shop from shop inner join slotbook on shop.shopid=slotbook.id_shop where slotbook.date=%s',[today_date,])
     shops_today = cursor.fetchall()
-    print(shops_today,len(shops_today))
+    # print(shops_today,len(shops_today))
     length  =len(shops_today)
     if shops_today:
         return render_template('today.html',shops=shops_today,l=length,date=today_date)
@@ -205,7 +205,7 @@ def tomorrow():
         tomorrow_date = date = datetime.date.today() + datetime.timedelta(days=1)
         cursor.execute('select distinct shop.shop_name,shop.owner_name,shop.address,shop.mobile,slotbook.id_shop from shop inner join slotbook on shop.shopid=slotbook.id_shop where slotbook.date=%s',[tomorrow_date,])
         shops_tomorrow = cursor.fetchall()
-        print(shops_tomorrow,len(shops_tomorrow))
+        # print(shops_tomorrow,len(shops_tomorrow))
         length = len(shops_tomorrow)
         if shops_tomorrow:
             response = make_response(render_template('tomorrow.html',shops=shops_tomorrow,l=length,date=tomorrow_date))
@@ -226,7 +226,7 @@ def today_slot():
     end=  int(duration['end'])
     cursor.execute('select slot_time from bookedslots where shop_id=%s and date=%s',[shopid,today_date])
     slots = cursor.fetchall()
-    print(slots)
+    # print(slots)
     sl = len(slots)
     return render_template('slot.html',s=start,e=end,shopid=shopid,date=today_date,slots=slots)
 
@@ -239,12 +239,12 @@ def tomorrow_slot():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('select start,end from slotbook where date=%s and id_shop=%s',[tomorrow_date,shopid])
     duration = cursor.fetchone()
-    print(duration)
+    # print(duration)
     start = int(duration['start'])
     end=  int(duration['end'])
     cursor.execute('select slot_time from bookedslots where shop_id=%s and date=%s',[shopid,tomorrow_date])
     slots = cursor.fetchall()
-    print(slots)
+    # print(slots)
     sl = len(slots)
     return render_template('slot.html',s=start,e=end,shopid=shopid,date=tomorrow_date,slots=slots)
 
@@ -258,7 +258,7 @@ def booked_slots():
     cursor.execute('SELECT * FROM bookedslots where date=%s and shop_id=%s order by cast(slot_time as unsigned);',[today_date,shopid])
     booked_slots = cursor.fetchall()
     length = len(booked_slots)
-    print(length)
+    # print(length)
     return render_template('shopview.html',booked=booked_slots,l=length,shop=shopid)
 
 
@@ -269,7 +269,7 @@ def customer_display():
     if request.method=='GET':
         now = datetime.datetime.now()
         date = datetime.date.today()
-        print(date)
+        # print(date)
         mobile = session['mobile']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM bookedslots where cus_mobile=%s order by date;',[mobile])
@@ -287,13 +287,13 @@ def customer_display():
         mobile = session['mobile']
         shopid = request.form['shopid']
         date = request.form['date']
-        print(date)
+        # print(date)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('select * from bookedslots where cus_mobile=%s and date=%s',[mobile,date])
         exist = cursor.fetchone()
         if exist:
             msg='You have already booked a slot for ' + str(date)
-            print(msg)
+            # print(msg)
         else:
             cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
             mysql.connection.commit()
@@ -307,7 +307,7 @@ def customer_display():
                                         to='customer_mobile_number'
                                     )
 
-            print(message.sid)
+            # print(message.sid)
             
 
 
