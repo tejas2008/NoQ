@@ -274,7 +274,6 @@ def customer_display():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT * FROM bookedslots where cus_mobile=%s order by date;',[mobile])
         booked_slots = cursor.fetchall()
-        print(booked_slots[0]['shop_id'])
         shopname=[]
         for k  in range(len(booked_slots)):
             cursor.execute('select shop_name from shop where shopid=%s',[booked_slots[k]['shop_id']])
@@ -296,19 +295,19 @@ def customer_display():
             msg='You have already booked a slot for ' + str(date)
             print(msg)
         else:
-            account_sid = 'your_account_sid'
-            auth_token = 'your_account_token'
-            client = Client(account_sid, auth_token)
-            body = 'Your slot has been successfully placed for '+date+' at '+time[:-3]+'.'
-            message = client.messages.create(
-                                        body=body,      
-                                        from_='your_twilio_number',
-                                        to='customer_mobile_number'
-                                    )
-
-            print(message.sid)
             cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
             mysql.connection.commit()
+            # account_sid = 'your_account_sid'
+            # auth_token = 'your_account_token'
+            # client = Client(account_sid, auth_token)
+            # body = 'Your slot has been successfully placed for '+date+' at '+time[:-3]+'.'
+            # message = client.messages.create(
+            #                             body=body,      
+            #                             from_='your_twilio_number',
+            #                             to='customer_mobile_number'
+            #                         )
+
+            # print(message.sid)
             
 
 
