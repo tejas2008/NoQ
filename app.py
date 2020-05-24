@@ -297,17 +297,17 @@ def customer_display():
         else:
             cursor.execute('insert into bookedslots VALUES (%s, %s, %s,%s,%s)',[name,mobile,time,date,shopid])
             mysql.connection.commit()
-            # account_sid = 'your_account_sid'
-            # auth_token = 'your_account_token'
-            # client = Client(account_sid, auth_token)
-            # body = 'Your slot has been successfully placed for '+date+' at '+time[:-3]+'.'
-            # message = client.messages.create(
-            #                             body=body,      
-            #                             from_='your_twilio_number',
-            #                             to='customer_mobile_number'
-            #                         )
+            account_sid = 'your_account_sid'
+            auth_token = 'your_account_token'
+            client = Client(account_sid, auth_token)
+            body = 'Your slot has been successfully placed for '+date+' at '+time[:-3]+'.'
+            message = client.messages.create(
+                                        body=body,      
+                                        from_='your_twilio_number',
+                                        to='customer_mobile_number'
+                                    )
 
-            # print(message.sid)
+            print(message.sid)
             
 
 
