@@ -26,6 +26,27 @@
 
 ##### Demo
 
+Home Page
+
+<div align = "center">
+ 
+<img src = "demo/home.jpg" width=600px/>
+
+Customer Interface
+
+![](demo/customer.gif)
+
+Shopkeeper Interface
+
+![](demo/shopkeeper.gif)
+
+Progressive Web App
+
+![](demo/pwa.gif)
+
+</div>
+
+
 
 
 ------------------------------------------
