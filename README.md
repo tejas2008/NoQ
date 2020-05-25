@@ -26,9 +26,9 @@
 
 ##### Demo
 
-Home Page
-
 <div align = "center">
+
+Home Page
  
 <img src = "demo/home.jpg" width=600px/>
 
