@@ -24,6 +24,14 @@ mysql = MySQL(app)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
 
+@app.before_request
+def before_request():
+    if not request.is_secure and app.env != "development":
+        url = request.url.replace("http://","https://",1)
+        code = 301
+        return redirect(url,code=code)
+
+
 # Routes:
 @app.route('/customer/login', methods=['GET', 'POST'])
 def login():
