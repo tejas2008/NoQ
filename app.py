@@ -85,8 +85,11 @@ def login1():
 @app.route("/")
 @app.route("/home",methods=['GET'])
 def home():
-    if request.method=='GET':
-        return render_template('index.html')
+    try:
+        if request.method=='GET':
+            return render_template('index.html')
+    except Exception as e:
+        print(e)
 
 
 @app.route('/logout')
