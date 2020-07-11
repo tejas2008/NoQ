@@ -24,12 +24,12 @@ mysql = MySQL(app)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 
 
-# @app.before_request
-# def before_request():
-#     if not request.is_secure and app.env != "development":
-#         url = request.url.replace("http://","https://",1)
-#         code = 301
-#         return redirect(url,code=code)
+@app.before_request
+def before_request():
+    if not request.is_secure and app.env != "development":
+        url = request.url.replace("http://","https://",1)
+        code = 301
+        return redirect(url,code=code)
 
 
 # Routes:
@@ -86,7 +86,7 @@ def login1():
 def main():
     return redirect(url_for('home'))
 
-    
+
 @app.route("/home",methods=['GET'])
 def home():
     try:
