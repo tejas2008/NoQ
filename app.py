@@ -83,10 +83,6 @@ def login1():
 
 
 @app.route("/",methods=['GET','POST'])
-def main():
-    return redirect(url_for('home'))
-
-
 @app.route("/home",methods=['GET'])
 def home():
     try:
