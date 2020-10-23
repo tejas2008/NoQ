@@ -10112,3 +10112,21 @@ textarea.form-control {
         border-bottom-left-radius:0;
         
       }
+      .social_links {
+        letter-spacing: 0.6em;
+      }
+      .social_icons {
+        color: #ffffff;
+      }
+      .social_icon_github:hover{
+        color:#373b40;
+      }
+      .social_icon_linkedin:hover{
+        color:#0072b1;
+      }
+      .social_icon_twitter:hover{
+        color:#00acee;
+      }
+      .social_icon_instagram:hover{
+        color: #833AB4
+      }
